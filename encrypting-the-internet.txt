@@ -1,0 +1,93 @@
+Encrypting the Internet with Go
+
+TL;DR;
+
+  - Cloudflare has adopted Go for some of their TLS processing
+  - Implemented TLS 1.3 in crypto/tls
+  - Lots of details that were not well suited to this format
+  - But undeniably impressive work
+
+Intro:
+
+  Earlier this year Cloudflare switched to Go.
+
+TLS 1.2:
+
+  Two step handshake
+
+  Hello & cipher suites ->
+  <- Server hello
+
+  ...
+
+TLS 1.3:
+
+  One roundtrip handshake
+
+  Zero roundtrip for resume. 0RTT
+
+crypto/tls:
+
+  Simple modern implementation of a small subset of TLS
+
+  Takes net.Conn and exposes a net.Conn
+
+  Higher level functions know connection state.
+
+  Lower level functions just parse.
+
+  Records are lowest level unit in TLS
+
+  Delegates to readRecord, switch on record type, updates some state.
+
+  (Personal note: Implementation might be a good pattern to follow in
+  https://github.com/mmcloughlin/pearl)
+
+Annoyances in 1.3:
+
+  0RTT data causes problems
+
+  State of handshake exposed with ConnectionState() method.
+
+  This is the only API change.
+
+In general:
+
+  TLS 1.3 is about SANE DEFAULTS
+
+  Doesn't even allow us to control the cipher suite.
+
+
+Internals did get more complicated
+
+  Read lock
+  Write lock
+  Handshake lock
+
+  Standard library uses sync.Cond to solve potential deadlocks.
+  In this case solved with one more "confim lock"
+
+Building
+
+  Interoperability tests in Travis CI.
+
+  Builds TLS clients in docker containers and confirms it can talk to them.
+
+  Black magic to rebuild standard library with new package in place of
+  crytpo/tls. (Necessary because net/http uses type assertions on the tls
+  package so it would break for external packages.)
+
+Other changes
+
+  The new Config.GetConfigForClient callback allows selecting a configuration
+  for a client dynamically
+
+
+net/http:
+
+  "DEFAULT TIMEOUTS NOT OK FOR INTERNET USE"
+
+More:
+
+  https://blog.gopheracademy.com/advent-2016/exposing-go-on-the-internet/
+  https://blog.cloudflare.com/author/filippo/
