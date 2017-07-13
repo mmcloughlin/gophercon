@@ -1,2 +1,3 @@
 # gophercon
-Notes from Gophercon
+
+Notes from [Gophercon](https://gophercon.com/) 2017.
