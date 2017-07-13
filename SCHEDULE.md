@@ -4,8 +4,8 @@
 
 | Start | End | Title | Room |
 | ----- | --- | ----- | ---- |
-| 9:10 AM | 9:35 AM | Go Reliability and Durability at Dropbox | Main |
-| 9:40 AM | 10:05 AM | The Future of Go | Main |
+| 9:10 AM | 9:35 AM | [Go Reliability and Durability at Dropbox](reliability-at-dropbox.txt) | Main |
+| 9:40 AM | 10:05 AM | [The Future of Go](future-of-go.txt) | Main |
 | 10:50 AM | 11:35 AM | Generating Better Machine Code with SSA | Main |
 | 11:45 AM | 12:30 PM | Creating a Custom Serialization Format | 1A |
 | 11:45 AM | 12:30 PM | A Go Programmer's Guide to Syscalls | 1D |
