@@ -6,14 +6,14 @@
 | ----- | --- | ----- | ---- |
 | 9:10 AM | 9:35 AM | [Go Reliability and Durability at Dropbox](reliability-at-dropbox.txt) | Main |
 | 9:40 AM | 10:05 AM | [The Future of Go](future-of-go.txt) | Main |
-| 10:50 AM | 11:35 AM | Generating Better Machine Code with SSA | Main |
+| 10:50 AM | 11:35 AM | [Generating Better Machine Code with SSA](ssa.txt) | Main |
 | 11:45 AM | 12:30 PM | Creating a Custom Serialization Format | 1A |
-| 11:45 AM | 12:30 PM | A Go Programmer's Guide to Syscalls | 1D |
-| 11:45 AM | 12:30 PM | Encrypting the Internet with Go | 2A |
-| 2:00 PM | 2:45 PM | Go Build Modes | 1A |
-| 2:00 PM | 2:45 PM | Self Deploying Kubernetes Applications | 1D |
+| 11:45 AM | 12:30 PM | [A Go Programmer's Guide to Syscalls](programmers-guide-to-syscall.txt) | 1D |
+| 11:45 AM | 12:30 PM | [Encrypting the Internet with Go](encrypting-the-internet.txt) | 2A |
+| 2:00 PM | 2:45 PM | [Go Build Modes](buildmodes.txt) | 1A |
+| 2:00 PM | 2:45 PM | [Self Deploying Kubernetes Applications](self-deploying-kubernetes.md) | 1D |
 | 2:00 PM | 2:45 PM | Valuable Lessons in Over-Engineering the Core of Kubernetes kops. | 2A |
-| 2:55 PM | 3:40 PM | Writing a Go Tool to Parse and Modify Struct Tags | 1A |
+| 2:55 PM | 3:40 PM | [Writing a Go Tool to Parse and Modify Struct Tags](structtags.txt) | 1A |
 | 2:55 PM | 3:40 PM | Go Anti-Patterns | 1D |
 | 2:55 PM | 3:40 PM | Operability in Go | 2A |
 | 4:25 PM | 4:50 PM | Forward Compatible Go Code | Main |
