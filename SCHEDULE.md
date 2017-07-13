@@ -14,7 +14,7 @@
 | 2:00 PM | 2:45 PM | [Self Deploying Kubernetes Applications](self-deploying-kubernetes.md) | 1D |
 | 2:00 PM | 2:45 PM | Valuable Lessons in Over-Engineering the Core of Kubernetes kops. | 2A |
 | 2:55 PM | 3:40 PM | [Writing a Go Tool to Parse and Modify Struct Tags](structtags.txt) | 1A |
-| 2:55 PM | 3:40 PM | Go Anti-Patterns | 1D |
+| 2:55 PM | 3:40 PM | [Go Anti-Patterns](go-antipatterns.md) | 1D |
 | 2:55 PM | 3:40 PM | Operability in Go | 2A |
 | 4:25 PM | 4:50 PM | Forward Compatible Go Code | Main |
 
