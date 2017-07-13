@@ -1,0 +1,190 @@
+Generating Better Machine Code with SSA
+
+TL;DR;
+
+  - Significant performance improvements by migrating code generation to SSA
+  - "Static Single Assignment"
+  - Enables easier code analysis and optimization passes
+
+Motivation:
+
+  - Initial compiler was inflexible
+  - Based on Plan 9 C compiler
+
+  Lots of examples in generateed codes:
+
+  - Unnecessary MOV instructions
+  - Multiplication by powers of 2
+
+  Frustrated by quality of generated code. With no evidence claimed:
+
+  - 20% smaller
+  - 10% faster
+
+  Proposed something more *principled*
+
+  - Convert from syntax tree
+  - to SSA IR
+
+  To assist improved optimizations.
+
+Timeline:
+
+  - Feb 2015 proposal, March 2015 branch, Merged one year later
+  - Go 1.7 support for amd64
+  - Go 1.8 added other archs
+
+Results:
+
+  On the Go benchmark suite (not very good)
+
+  - 12% faster
+  - 13% smaller
+
+  Not entirely uniform improvements.
+
+  Great results from other community benchmarks. For example 40% on hash
+  functions.
+
+  - Compiler is slower by about 10%
+  - Made slower by doing more work
+  - But it's faster because the compiler compiles itself :)
+
+How does Go use SSA?
+
+  .go -> compiler -> .o
+
+  Inside that there's various intermediate representations.
+
+  Steps in the go 1.5 compiler:
+
+  - lexer and parser (syntax tree)
+  - type checking (syntax tree)
+  - code generation (assembly)
+  - build object file
+
+  Optimization passes:
+
+  - Type checking
+  - Closure analysis
+  - Inlining
+  - Escape analysis
+  - Temporaries where needed
+  - Runtime calls (maps, channels, append, ...)
+  - Code generation
+
+  SSA will be added in the last code generation step. That's what changed in
+  Go 1.7.
+
+  Now code generation is:
+
+  - convert to SSA
+  - multiple SSA passes
+  - ...
+  - SSA to assembly
+
+What is SSA?
+
+  "Static Single Assignment"
+
+  One assignment for every variable in the program.
+
+  That's in the *text* of the program. It could occur in a loop.
+
+  This means adding more variables.
+
+  Branches are odd:
+
+    x = 7
+    if b {
+      x = 8
+    }
+    fmt.Println(x)
+
+  In SSA:
+
+    x1 = 7
+    if b {
+      x2 = 8
+    }
+    fmt.Println(x?)
+
+  We introduce this "phi" function that merges variables that were the same.
+
+    x1 = 7
+    if b {
+      x2 = 8
+    }
+    x3 = phi(x1, x2)
+    fmt.Println(x3)
+
+  Now we have a control flow graph. Basic blocks with arrows.
+
+Why is it useful?
+
+  More amenable to optimization.
+
+  - Common subexpression elimination
+  - Dead code elimination
+  - Dead store elimination (immediately overwritten, eg zero values in Go are
+    often overwritten straight away)
+  - Nil check elimination
+  - Bounds check elimination
+  - Register allocation
+  - Instruction scheduling
+
+Common subexpression:
+
+  y = x + 5
+  ...
+  z = x + 5
+
+  Without SSA, x could have changed.
+
+  In SSA it could not have. So can do
+
+  y = x + 5
+  ...
+  z = y
+
+Bounds check:
+
+  if len(a) >= 4 {
+    fmt.Println(a[3])
+  }
+
+  Compiler implicitly does a bounds check (it will panic).
+
+  So there's another if inside. With SSA we know a hasn't changed, so the
+  interior "if" can be removed.
+
+Rewrite rules:
+
+  General rules
+
+    const * const -> const (multiplication can happen at compile time)
+    x * 2^n -> x << n
+
+  Also in "lowering" when we go from generic Go opcodes to machine opcodes.
+
+  All that's required for a port is the "lowering" rules.
+
+Lots still to do:
+
+  Alias analysis
+    - Pointers to the same things
+    - Store-load forwarding (move in registers instead)
+    - Better dead store removal
+    - Devirtualization (refering to Interface method calls)
+
+  Better register allocation
+
+  Code layout (eg rare code put somewhere else)
+
+  Better scheduling
+
+
+NEED BETTER BENCHMARKS
+
+  - To guide improvements
+
