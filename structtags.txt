@@ -1,0 +1,10 @@
+Writing a Go Tool to Parse and Modify Struct Tags
+
+https://github.com/fatih/structtag
+
+TL;DR;
+
+  - Nice project but I don't think it justified a full talk
+  - Ingredient in IDE tool https://github.com/fatih/gomodifytags
+  - Showcased some useful tools for processing Go code (parser and format
+    packages)
