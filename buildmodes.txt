@@ -1,0 +1,109 @@
+Go Build Modes
+
+TL;DR;
+
+  - Go code can be built as more than just executables
+  - Build modes support using Go with other languages
+  - "plugin" mode is interesting for dynamically loading (currently limited
+    platform support)
+
+Introduction:
+
+  Build modes create binaries for various execution modes.
+
+  Execution modes are for running Go in different ways.
+
+  Also allows for building partial Go programs.
+
+exe (static):
+
+  All code in one binary!
+
+  CGO_ENABLED=0 forces this.
+
+exe (with libc):
+
+  Static, with libc.
+
+  Used by `net` for DNS and `os/user` for username lookup.
+
+  This is automatic when you use `net` and other packages.
+
+  It's "polite" to the host OS. Makes the binary behave the way the OS
+  expects. This executable will use the same OS conifiguration.
+
+exe (with libc and nin-Go code):
+
+  Also happens with non-Go code, called by cgo.
+
+  Non-Go code can be build into the binary or dynamically linked.
+
+pie:
+
+  "Position Independent Executble"
+
+  Otherwise makes no difference to the user.
+
+  Jumps are to relative positions rather than absolute positions.
+
+  Then the code can be put anywhere in memory.
+
+  Address layout randomization. For security reasons, this is likely to become
+  the norm.
+
+c-archive:
+
+  Bundles into an archive (.a) file.
+
+  C programs can statically link it.
+
+c-shared:
+
+  Build to a dynamic library (.so).
+
+  C programs can dynamically link to it.
+
+shared:
+
+  Shared build mode bundles Go packages into a shared library that can be
+  dynamically linked by a Go program.
+
+  $ go install -buildmode=shared std
+
+  $ go build -linkshared hi.go
+
+  The size is tiny, since stdlib isn't statically compiled.
+
+  $ ldd hi
+
+  ... will show us that it is dynamically linked to the Go standard library.
+
+plugin:
+
+  Bundles Go packages into a shared library that can by dynamically loaded by
+  the plugin package.
+
+What are they good for?
+
+  - exe (static) all code in one binary
+  - With libc, important for being "polite" in userspace
+  - Working with other non-Go is good for legacy systems
+  - pie is the future
+  - c-archive integrates with existing C
+    Good when existing non-Go code is existing and extremely complex
+    "introduce a bit of go on the side"
+    This is how Go iOS apps work
+  - c-shared is similar. This is how Go works in android.
+  - "Cross language calls in Go are tricky"
+
+  - shared is how many ODs handle binaries created in other languages
+  - Can save disk space, but not that important any more
+  - Can save RAM on tiny devices
+
+Justifying plugins!
+
+  Think microservices, but in a case where each service needs massive
+  resources. In the case study, each service needed to work on a core graph
+  dataset of size 1TB in RAM.
+
+  In that case microservices could be plugins instead and share memory space.
