@@ -1,0 +1,86 @@
+Writing Networking Clients in Go: The Design and Implementation of the NATS Client
+
+TL;DR;
+
+  NATS simple approach meshes well with Go
+  Flexible language allows trade offs
+  Tooling makes performance analysis easy
+
+NATS:
+
+  https://nats.io/
+  Messaging protocol
+  Pub/sub
+  TCP/IP based
+  Plaintext protocol
+
+Delivery guarantees
+
+  If something has to be done at the applicaiton layer...
+  ... don't bother doing it at the lower 
+
+  NATS streaming: Layer above that provides at least once delivery
+
+NATS:
+
+  Client -> Server
+    PUB, SUB, UNSUB, CONNECT
+
+  Client <- Server
+    INFO, MSG, ERR, OK
+
+
+  $ telnet demo.nats.io 4222
+  Trying 107.170.221.32...
+  Connected to demo.nats.io.
+  Escape character is '^]'.
+  INFO {"server_id":"zrPhBhrjbbUdp2vndDIvE7","version":"0.9.6","go":"go1.7.4","host":"0.0.0.0","port":4222,"auth_required":false,"ssl_required":false,"tls_required":false,"tls_verify":false,"max_payload":1048576}
+  SUB hello 1
+  +OK
+  SUB hello 2
+  +OK
+  PUB hello 2
+  hi
+  +OK
+  MSG hello 1 2
+  hi
+  MSG hello 2 2
+  hi
+
+IO:
+
+  connection has reader and flusher goroutines
+
+  flusing uses a buffered channel
+  used to signal a flush in underlying bufio.Writer
+
+  reader uses zero-allocation parser
+  for { switch { ... } } based parsing
+
+All commands are async
+
+  Rely on internal engine to eventually flush and send to the server.
+
+  How do you ensure everything has been processed by the server.
+  And ordering?
+
+  Ordering is guaranteed per connection.
+
+  So we can use PING/PONG to guarantee that the server has received the
+  message.
+
+  Flush() command sends PING, flushes and waits for PONG.
+
+  This gives a "sync" command effectively.
+
+Configuration
+
+  Nice use of the functional options pattern.
+
+Request/Response
+
+  Implemented with ephemeral subscriptions and randomized topic names.
+
+  Randomized topic name (an inbox) is communicated on a different topic.
+
+

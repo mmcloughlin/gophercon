@@ -37,6 +37,6 @@
 | 2:00 PM | 2:45 PM | Go at the DARPA Cyber Grand Challenge: Channels and Parallelism for High Performance Database, Network and File I/O | 1D |
 | 2:00 PM | 2:45 PM | Building a High-Performance Key/Value Store in Go | 2A |
 | 2:55 PM | 3:40 PM | The Fallacies Of Distributed Gomputing | 1A |
-| 2:55 PM | 3:40 PM | Writing Networking Clients in Go: The Design and Implementation of the NATS Client | 1D |
+| 2:55 PM | 3:40 PM | [Writing Networking Clients in Go: The Design and Implementation of the NATS Client](networking-clients.txt) | 1D |
 | 2:55 PM | 3:40 PM | grpc: From Tutorial to Production | 2A |
 | 4:25 PM | 4:50 PM | The New Era of Go Package Management | Main |
