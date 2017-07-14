@@ -33,7 +33,7 @@
 | 11:45 AM | 12:30 PM | Runtime Generated, Typesafe, and Declarative: Pick Any Three | 1A |
 | 11:45 AM | 12:30 PM | [An Introduction to "go tool trace"](trace-tool.txt) | 1D |
 | 11:45 AM | 12:30 PM | Evolutionary Optimization with Go | 2A |
-| 2:00 PM | 2:45 PM | Functional Programming in Go | 1A |
+| 2:00 PM | 2:45 PM | [Functional Programming in Go](functional-programming.txt) | 1A |
 | 2:00 PM | 2:45 PM | Go at the DARPA Cyber Grand Challenge: Channels and Parallelism for High Performance Database, Network and File I/O | 1D |
 | 2:00 PM | 2:45 PM | Building a High-Performance Key/Value Store in Go | 2A |
 | 2:55 PM | 3:40 PM | The Fallacies Of Distributed Gomputing | 1A |

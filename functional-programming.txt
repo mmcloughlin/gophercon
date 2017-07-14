@@ -1,0 +1,86 @@
+Functional Programing in Go
+
+TL;DR;
+
+  - Experiments with Functional Programming
+  - Go will not be the new Haskell
+  - At the least brings some new perspectives
+  - https://github.com/go-functional/core
+
+  This talk could have benfitted from going deeper on FP concepts, and using
+  some real life examples.
+
+Is this even a good idea?
+
+  Go won't be the next Haskell
+
+  But concepts are still powerful when applied appropriately
+
+Goals
+
+  "Add tools to your toolbox"
+  New perspective
+  New abstractions
+
+FP
+
+  Functions!
+
+Higher order functions
+
+  Functions that operate on functions, or return them
+
+Global State
+
+  Eg. database connections, logger, metrics, ...
+
+  Problem for concurrency, testing
+
+  Functions are not "pure"
+
+Pure functions
+
+  Return value is pure function of the parameters
+
+  Predictable
+
+  But at some point you have to do real things!
+
+  - database
+  - file system
+  - network calls
+
+  Still...
+
+  - know when your functions are non-pure
+  - and strive for pure functions
+
+Functors
+
+  Abstracting `for` loops
+
+    var slice []int
+    result := magical(slice).Map(doSomething)
+
+  Here `magical` is the functor. It wraps the slice and provides methods on
+  it, like Map.
+
+  Map takes func(int) int
+
+  With map we indicate *intention* not *implementation*
+
+  Under the hood we can parallelize for larger slices, if we want
+
+  We can also apply a functor to a channel
+
+Optional
+
+  Optional types, may or may not have a value.
+
+  For dealing with uncertainty.
+
+Either
+
+  Is a pair of Optionals
+
+  A way of handing error returns
