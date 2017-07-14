@@ -1,0 +1,55 @@
+My Journey to Go
+
+TL;DR;
+
+  - Contribute to the community in any way you can
+
+About
+
+  Artist turned web developer
+  Developer advocacy at Rackspace
+  Met Steve Francia @spf13
+  Ended up doing Go workshop
+
+  Author of Gopherize Me
+
+Contributing
+
+  "Contributing is not just about code"
+
+  Don't have to be Rob Pike!
+
+  Small contribution is better than no contribution.
+
+  Best project to contribute to is one you're already using.
+
+  What are you good at right now?
+
+  Listening: mailing lists, blogs, irc, reddit, ...
+
+Tickets
+
+  Diagnosing bugs
+
+  Closing fixed tickets
+
+Code
+
+  Test a beta release
+
+  Fix a bug
+
+  Write a test
+
+Docs. Docs. Docs.
+
+  Often written my heaviest users. So from the wrong perspective.
+
+Community
+
+  - Answer a question
+  - Write a blog post, even if it's silly
+  - Improve a website
+
+  "We are a community of coders, but if all we do is code we've lost the
+  community."

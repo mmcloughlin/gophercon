@@ -23,7 +23,7 @@
 | Start | End | Title | Room |
 | ----- | --- | ----- | ---- |
 | 9:10 AM | 9:35 AM | Understanding Channels | Main |
-| 9:40 AM | 10:05 AM | My Journey to Go | Main |
+| 9:40 AM | 10:05 AM | [My Journey to Go](my-journey-to-go.txt) | Main |
 | 10:50 AM | 11:35 AM | Advanced Testing with Go | Main |
 | 11:45 AM | 12:30 PM | Runtime Generated, Typesafe, and Declarative: Pick Any Three | 1A |
 | 11:45 AM | 12:30 PM | An Introduction to "go tool trace" | 1D |
