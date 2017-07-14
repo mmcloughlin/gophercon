@@ -1,0 +1,83 @@
+Forward Compatible Go1.x Code
+
+TL;DR;
+
+  - Test Go 1.9 now
+  - Follow the docs!
+
+Hyrum's Law
+
+  With a suffucient number of users of your API, it does not matter what you
+  promised in a *contract*, all observable behaviors of your interface will be
+  depended on by somebody.
+
+Go1 Compatibility Promise
+
+  Stable platform for Go projects
+
+  All Go1 code should continue to work unchanged in all future releases.
+
+  In practice... that's not always true.
+
+  - Breakages due to programmer
+    - Relies on output stability
+    - Relying on value comparibility
+    - Relying on runtime details
+
+  - Due to the toolchain
+
+
+Relies on output stability
+
+  - archive/zip,tar
+  - json
+  - ...
+
+  The packages really just guarantee compatibility with the standards. Not the
+  exact output.
+
+
+Relying on value comparibility
+
+  - time.Time
+  - errors
+  - reflect.Value
+
+  For example in Go 1.9, inclusion of monitonic clock. Marshalling will strip
+  monitonic clock information. Therefore roundtrip marshal/unmarshal will lose
+  the monitonic reading.
+
+  This can cause problems when using these types as map keys.
+
+  - Don't rely on reflect.DeepEqual
+  - Suggest https://github.com/google/go-cmp/
+
+Relying on runtime details
+
+  - Upgrades can manifest certain race conditions
+  - Goroutine scheduling
+  - map iteration order
+  - Timing of functions
+  - Text of panics or errors
+
+  Package unsafe is explicitly exempt from the compatibility guarantee.
+
+How do you write forward compatible Go code
+
+  - RTFM
+  - Be careful of hardcoding anything
+  - Be careful comparing types
+  - Use race detector
+  - Use unsafe with caution
+
+Breakages due to toolchain
+
+  Go development cycle is 6 months.
+
+  - 3 month dev
+  - 3 month freeze
+
+  Very interesting graph on test failures at Google throughout the development
+  cycle.
+
+  Encourage community to test with beta releases and report regressions.

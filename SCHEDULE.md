@@ -16,7 +16,7 @@
 | 2:55 PM | 3:40 PM | [Writing a Go Tool to Parse and Modify Struct Tags](structtags.txt) | 1A |
 | 2:55 PM | 3:40 PM | [Go Anti-Patterns](go-antipatterns.md) | 1D |
 | 2:55 PM | 3:40 PM | Operability in Go | 2A |
-| 4:25 PM | 4:50 PM | Forward Compatible Go Code | Main |
+| 4:25 PM | 4:50 PM | [Forward Compatible Go Code](forward-compatible-go.txt) | Main |
 
 ## Day 2
 
