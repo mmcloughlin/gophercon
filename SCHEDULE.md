@@ -1,5 +1,10 @@
 # Schedule
 
+## Highlights
+
+* [The Future of Go](future-of-go.txt)
+* [Advanced Testing with Go](advanced-testing.txt)
+
 ## Day 1
 
 | Start | End | Title | Room |
@@ -24,9 +29,9 @@
 | ----- | --- | ----- | ---- |
 | 9:10 AM | 9:35 AM | Understanding Channels | Main |
 | 9:40 AM | 10:05 AM | [My Journey to Go](my-journey-to-go.txt) | Main |
-| 10:50 AM | 11:35 AM | Advanced Testing with Go | Main |
+| 10:50 AM | 11:35 AM | [Advanced Testing with Go](advanced-testing.txt) | Main |
 | 11:45 AM | 12:30 PM | Runtime Generated, Typesafe, and Declarative: Pick Any Three | 1A |
-| 11:45 AM | 12:30 PM | An Introduction to "go tool trace" | 1D |
+| 11:45 AM | 12:30 PM | [An Introduction to "go tool trace"](trace-tool.txt) | 1D |
 | 11:45 AM | 12:30 PM | Evolutionary Optimization with Go | 2A |
 | 2:00 PM | 2:45 PM | Functional Programming in Go | 1A |
 | 2:00 PM | 2:45 PM | Go at the DARPA Cyber Grand Challenge: Channels and Parallelism for High Performance Database, Network and File I/O | 1D |

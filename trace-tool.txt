@@ -1,0 +1,95 @@
+Using "go tool trace"
+
+TL;DR;
+
+  - See time dependent issues
+  - Complements other profiling methods
+  - Great for visualizing concurrency issues
+
+Intro
+
+  Tool for visualizing concurrency
+
+1. Timing dependent bug
+
+  Race conditions
+
+    go test -race
+    go install -race
+
+  This was a logical race to do with gRPC, HTTP/2 and flow control.
+
+  Flow control ensures the receiver is ready.
+
+    go test -trace=trace.out
+    go tool trace trace.out
+
+  Timeline view
+
+  Also blocking diagram:
+    things that were active when something undesirable happened!
+
+  Goroutine analysis
+
+    View single goroutines and the others they interacted with
+    What made it start
+    What made it stop
+
+  Gave detailed example of locating the bug in a quota pool.
+
+
+2. What it doesn't show
+
+  Curious gaps every 5 seconds:
+  - ReadMemStats was causing long pauses.
+
+  Another distinctive goroutine stood out:
+  - Good target for profiling
+
+  But the trace tool doesn't tell us everything. Mainly good to guide us in
+  the right direction.
+
+3. Garbage collection latency
+
+  Example where during garbage colleciton we observe:
+
+  - Growth in goroutine queue
+  - Patchy network
+
+  Timeline:
+
+    Go 1:   program fully stopped
+    Go 1.1: started using parallel threads
+    Go 1.4: precise collection
+    Go 1.5: global pauses < 10ms, parallel gc
+    Go 1.8: goroutine pauses < 100 microseconds
+
+  Goroutines can stop when:
+
+    allocating memory
+
+  Not when "crunching numbers"
+
+  Seen in:
+
+    base64
+    json
+    protobuf
+
+  Measurable for 1MB values and above
+
+How does the GC run?
+
+  Constantly fighting the user.
+
+  - User is allocating memory
+  - GC is trying to avoid filling up
+
+  It needs to make
+
+  "mark" finds in use memeory
+  "sweep" cleans unused
+
+  Goroutines are pulled in the "assist" with mark and sweep steps.
+
+  Advice: don't allocate in critical paths?

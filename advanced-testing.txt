@@ -1,0 +1,198 @@
+Advanced Testing with Go
+
+Hashicorp
+
+  Majority of code in Go
+  Primary language for 5 years
+
+  Distributed systems
+  Extreme performance
+  Security
+  Correctness
+
+Testing
+
+  Testing Methodology
+
+  Writing Testable Code
+  - People say "this can't be tested"
+  - But they might have written it wrong
+  - Rewriting code can be a pain, but worth it
+
+Subtests
+
+  New in Go 1.8
+
+  Can target subtests, and nest them.
+
+  Usually used for...
+
+Table-driven Tests
+
+  Table of test cases.
+
+  Low overhead to add new cases!
+
+  Often use for even single cases, if it's possible to grow.
+
+  Used *a lot* in hashicorp.
+
+  Recommend using a name for the testcase.
+
+Test Fixtures
+
+  Because `go test` sets the working directory, we can access data in a
+  testdata directory.
+
+Golden Files
+
+  *.golden files for expected output
+
+  -update flag to update the golden files
+
+Global State
+
+  Avoid it.
+
+  Makes testing difficult.
+
+  Test results may depend on the order tests are run.
+
+  Use a configuration instead.
+
+Test Helpers
+
+  Should never return an error.
+
+  Take the testing.T and fail the tests on an error.
+
+  In Go 1.9, t.Helper() changes the way errors are reported.
+
+  Can return a cleanup function from a helper.
+
+    tf, tfclose := testTempFile()
+    defer tfclose()
+
+Repeat Yourself
+
+  Localized logic in tests is preferred.
+
+  When it fails, don't remember details anymore.
+
+  Limit helpers to heavily reused logic that doesn't fail often.
+
+  "Helpers only help someone who knows what they do."
+
+  Prefer 200 line tests to 20 line test with obscure helpers.
+
+Package/Functions
+
+  Break down into packages/functions judiciously.
+
+  Don't overdo it!
+
+  Unless function is *extremely* complex, test only exported API.
+
+  Unexported functions are implementation details.
+
+  Refactoring is easier without changing the tests.
+
+Under/over packaging
+
+  Use internal packages to "over package"
+
+  If you under-package, refactoring incrementally can be hard due to import
+  cycles.
+
+  Hashicorp prefers to over package under 
+
+Networking
+
+  Mock net.Conn?
+
+  There's no point. Make a network connection.
+
+  Easy to connect to yourself!
+
+  Never mock a net.Conn
+
+Configurability
+
+  Unconfigurable behavior is often point of difficulty.
+
+  For example ports, timeouts, paths.
+
+  Overparameterize structs for testing.
+
+  Make options private, or prefix with "test" if they are really.
+
+  Or even use a "Test" bool.
+
+Complex Structs
+
+  How do you compare massive structs to each other?
+
+  Use a private testString() method, that returns a human friendly
+  representation of the fields that matter.
+
+Subprocessing
+
+  Options...
+
+  - Actually do the subprocess
+  - Mock the output
+
+  Real:
+
+    Test for existence of binary
+
+    Skip if not
+
+  Mock:
+
+    Execute a mock!
+
+    Make exec.Cmd arguments configurable
+
+    This is how they test os/exec
+
+    Use exec.Cmd to run "go test -run=TestExecHelper"!
+
+Interfaces
+
+  Important mocking points
+
+  Create interfaces where you might need alternative implementations.
+
+  Small interfaces
+
+  Even when we have a big interface, function takes the smallest subset of it
+  that it needs.
+
+Testing as Public API
+
+  To make it easier for other people to write tests that use it.
+
+  For example:
+
+    TestConfig()
+
+    TestServer()
+
+  Also tests for generic interfaces.
+
+    TestDownloader(t, Downloader)
+
+  Export mocks.
+
+Custom Frameworks
+
+  For things that don't quite git unit tests, still try to fit them into "go
+  test" framework.
+
+  Eg. terraform acceptance tests that actually builds infrastructure.
+
+  Uses a special flag in the tests to enable acceptance tests.
+
+
+
