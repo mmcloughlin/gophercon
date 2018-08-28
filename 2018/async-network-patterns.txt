@@ -1,0 +1,113 @@
+Asyncronous Networking Patterns
+Filippo Valorsada
+
+
+net package background
+
+  Focus on net package.
+
+  We will write an example.
+
+  Despite the name of the talk, almost everything will be syncronous.
+
+  In the past:
+
+  - one thread per connection
+  - entire thread is too much overhead
+
+  Therefore, event loop:
+
+  - event queue: new connection, read/write
+  - served by thread pool
+  - background poller
+  - it's a pain
+
+  Enter, Go:
+
+  - handle each thread as goroutine
+  - goroutine scheduler basically handles the event loop for you
+  - it's complicated, but behind the scenes
+
+
+Accepting Connections
+
+  Core net.Conn interface
+
+  - io.Reader
+  - io.Writer
+  - Close()
+  - addresses
+  - deadlines
+
+
+  Listener built with net.Listen
+
+  Loop on listener.Accept()
+
+  Each accept returns a net.Conn.
+
+  It's a reader, we can use io methods with it, like io.Copy.
+
+  Launch goroutine to handle each connection.
+
+  COMMON ERROR:
+  - not launching a goroutine
+  - doing a tiny amount of work... like reading a header
+  - someone can connect and do nothing, blocking your entire server
+  - must IMMEDIATELY launch the connection servicing goroutine
+
+
+Timeouts
+
+  Always use timeouts.
+
+  In the example, replace io.Copy with our own version.
+
+  Loop on conn.Read()... with conn.SetReadDeadline(...)
+
+  Close() after timeout (defer in the "service connection" function)
+
+
+Simple Proxy
+
+  Handler uses net.Dial to connect to other end.
+
+  Relay traffic in both directions:
+
+  - io.Copy(conn, remote)
+  - io.Copy(remote, conn)
+
+  One of them in a goroutine. The other runs in the connection handler.
+
+  ALWAYS KNOW HOW A GOROUTINE WILL EXIT
+
+  Note this is actually extremely fast. `io.Copy` will use splice system call
+  to copy between network connections.
+
+
+Parsing TLS
+
+  SetReadTimeout
+  Read header
+  Read message
+
+  See https://godoc.org/golang.org/x/crypto/cryptobyte
+
+  What if we wanted to start proxying after this?
+
+  But we already read from the connection.
+
+  Produce a net.Conn wrapper
+  - override the Read() method to read from existing buffer before the
+    connection
+  - see io.MultiReader for concatenating readers https://golang.org/pkg/io/#MultiReader
+
+
+Serving TLS
+
+  tls.Conn *is* a net.Conn wrapper (no goroutines)
+
+  Wrap connection with tls.Server
+
+
+
