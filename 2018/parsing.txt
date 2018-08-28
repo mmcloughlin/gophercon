@@ -1,0 +1,118 @@
+Parsing in Go
+CTO Planet Scale
+
+
+Intro
+
+  Major product is Vitess https://vitess.io/
+
+  Required SQL parser
+
+
+Use Cases
+
+  Language
+  Data files: more common use case
+  Network protocol parser
+  Complex state machines
+
+
+How to write a parser
+
+  Owl meme :)
+
+  Write some state diagrams -> write the rest of the code
+
+
+goyacc
+
+  Grammar -> code
+  State machine
+  LALR(1)
+  Embed code
+
+  Pros:
+    Readable
+    Extensible
+    Testable
+    Efficient
+    Detects conflicts
+
+  Not so good, use something else if:
+
+    Error handling isn't great with goyacc
+    Extreme efficient
+    Not LALR(1)
+
+
+How?
+
+  Express the grammar, with tokens
+  Parser generated with goyacc
+  Write a lexer that emits the tokens
+
+
+  Parser expects a type with the methods
+
+    Lex()
+    Error()
+
+
+Example
+
+  How to parse a phone number
+
+    %union {
+      result Result
+      str string
+      ch byte
+    }
+
+    %token D
+
+    %type <ch> D
+    %type <result> phone
+    %type <str> area part1 part2
+
+    %start main
+
+    main: phone
+      {
+        setResult(yylex, 0)
+      }
+
+    phone:
+      area part1 part2
+      {
+        $$ = Result{Area: $1, Part1: $2, Part2: $3}
+      }
+    | area '-' part1 '-' part2
+      {
+        $$ = Result{Area: $1, Part1: $3, Part2: $5}
+      }
+
+    area: D D D
+      {
+        $$ = cat($1, $2, $3)
+      }
+
+    part1: D D D
+      {
+        $$ = cat($1, $2, $3)
+      }
+
+    part2: D D D D
+      {
+        $$ = cat($1, $2, $3, $4)
+      }
+
+
+Lexer
+
+  Rob Pike https://talks.golang.org/2011/lex.slide#1
+  Fatih https://medium.com/@farslan/a-look-at-go-scanner-packages-11710c2655fc
+  go/scanner/
+  https://blog.gopheracademy.com/advent-2014/parsers-lexers/
+
+
+
