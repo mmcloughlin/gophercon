@@ -1,0 +1,42 @@
+Go 2
+
+  Main requests:
+
+  - package management
+  - error handling
+  - generics
+
+  The Go team is serious on all three fronts.
+
+
+Modules
+
+  Still experimental
+
+  Year or two for the entire system to be adapated to support them.
+
+
+Error Handling
+
+  Too much:
+
+    if err != nil {
+      return nil, err
+    }
+
+  Verbose, and doesn't add any context.
+
+  Proposal:
+
+    "check" statement
+
+  With a "handle" block that explains how to handle the result of a check
+  statement.
+
+
+Generics
+
+  Do we infer which types can be used from the implementation?
+
+  In the draft design, a "contract" specifies which capabilities the generic
+  type must have.
