@@ -1,0 +1,47 @@
+Go for Information Displays
+Anthony Starks, Sanofi
+
+
+Go is tha language of the cloud, but "sometimes you have to make a picture"
+
+(This might not be as good in text form.)
+
+
+Intro
+
+  Frustrated with image editors
+
+  Prefer to generate visuals with programming...
+
+  - precision
+
+
+  If the tools aren't good enough, it's time to write your own
+
+  SVGo, OpenVG, Deck
+
+
+SVGo
+
+  SVGo allows SVG construction in Go
+
+  Example use cases:
+
+  - Visialization of Go benchmarks
+  - Viz of go structs
+  - Scatter plots
+  - ...
+
+
+OpenVG
+
+  Interface to Raspberry Pi graphics accelerator.
+
+
+Deck
+
+  https://github.com/ajstarks/deck
+
+  Presentation generator.
+
+  Backed by XML. Code generators for it.

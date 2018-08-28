@@ -1,0 +1,103 @@
+Machine Learning on Go Code
+Fancesc Campoy
+VP of Developer Relations at source{d}
+
+
+"Software is eating the world"
+
+  Early Photoshop: 120k lines
+  Windows: 4-5 million
+  Office: 9 million
+  Chrome: 18 million
+  Windows XP: 45 million
+  Ford F350: 150 million
+  Google: 1 billion lines
+
+  Tools have not evolved *that much*
+
+  We need to develop better tools for the scale we're at
+
+
+Machine Learning *on* Go code
+
+  Input to the model is source code
+
+  Extract information specific to source code
+
+  Related fields:
+
+  - Data mining
+  - NLP
+  - Graph-based machine learning
+
+  Require:
+
+  - Lots of data
+  - Really, lots of data
+  - ML algorithms
+  - Luck
+
+  Data:
+
+  - https://www.gharchive.org/
+  - https://pga.sourced.tech/
+
+  Tasks:
+
+  - language classification: enry, linguist
+  - parsing: babelfish, ad-hoc parsers
+  - token extraction: XPath / css
+  - reference resolution: kythe
+  - history analysis: go-git
+
+  srcd custom SQL: https://github.com/src-d/engine
+
+
+How to treat source code
+
+  - Sequence of bytes
+  - Sequence of tokens
+  - AST
+  - Control flow graph
+
+
+Learning
+
+  Predict the next token? Why?
+
+  charRNN predicts next token with 61% accuracy
+
+  Produced something that generates go-like strings.
+  But it's a programming language.
+
+
+Research
+
+  varmisuse: paper that was able to predict a missing token.
+
+  code2vec: predict function name you should
+
+  https://github.com/src-d/awesome-machine-learning-on-source-code
+
+
+Attention for Code Reviews
+
+  Instead of generation source code, how about computing "how predictable is
+  this code"
+
+  Use this for highlighting pieces of code to focus on.
+
+  varmisuse: use it to spot the wrong variable being used
+
+  code2vec: suggest function names
+
+
+Future
+
+  Code style enforcing
+  Bug prediction
+  Automated code review
+  Eduction
+
+  Code generation
+  Natural analysis: description of code
