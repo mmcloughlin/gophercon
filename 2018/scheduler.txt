@@ -1,0 +1,108 @@
+The Scheduler Saga
+
+- run goroutines concurrently
+- garbage collection
+
+Can handle 100k+ goroutines.
+
+Makes decisions on what to run when, has a huge impact on the performance of Go
+code.
+
+* Spec
+
+Why? Because Go has goroutines: user-space threads, green-threads.
+
+Lighter weight, faster:
+
+* creation and destruction
+* context switching
+
+OS only knows how to schedule kernel threads, on the CPU.
+
+So Go has to schedule onto kernel threads.
+
+* When?
+
+Any time a goroutine should or would affect goroutine operation:
+
+- Lock
+- Channel read
+- System calls (also blocks underlying OS thread)
+- ... plus other (see later)
+
+* Goals
+
+- Use a small number of OS threads
+- High concurrency: have to handle many
+- Leverage hardware parallelism: use all cores on the hardware
+
+* Build It
+
+How do you multiplex onto kernel threads.
+
+- How do you decide which to run
+- How to create the threads
+
+We use runqueues: add to the tail, pick from the head
+
+Non-ideas:
+
+- Using one OS thread. Won't work, since with syscalls the actual OS thread
+  will block.
+- Create and destroy a thread per goroutine. Defeats the purpose.
+
+Idea 1:
+
+- Create as many threads as we need, but...
+- Reuse threads. If a thread becomes free, "park the thread" so we can use it
+  later.
+
+Problems:
+
+- Many threads manipulating shared data structure
+- Can still create unbounded number of threads
+- ... massive contention
+
+Idea 2:
+
+- Limit # threads that can access the runqueue
+- What should the limit be? Tradeoff contention vs. using all the hardware
+  resources. So... limit is # CPU cores.
+
+What happens on a many core machine? The number of threads accessing the
+runqueue is large and produces unacceptable contention.
+
+Idea 3:
+
+- Still a good idea to set # threads to # cores
+- One runqueue per thread.
+
+But we need some kind of "work stealing" mechanism, in the case where a
+thread has an empty local runqueue.
+
+What happens when a thread is blocked? Then we have a runqueue for a thread
+that can't execute it.
+
+So we have a "handoff" mechanism for a thread to give up its runqueue
+
+- This is done by a background thread. Could immediately give away the
+  runqueue but we want to allow for a case where the thread is blocked for a
+  short time, and keeps the runqueue.
+- Background thread (monitor) gives the runqueue either to a parked thread, or
+  creates another one.
+- Creating another thread does not violate the limit, since the limit is on
+  the number of threads *running* goroutines.
+
+Problem:
+
+- CPU hog can starve the runqueue, since they don't have locks, syscalls,
+  channel ops, ...
+- System monitor kicks off long running goroutines: 10ms or more
+- Moved to a global runqueue... contention again?
+- The global runqueue is a lower priority, checked less frequency
+
+* Evaluation
+
+- FIFO. No notion of priority.
+- No strong pre-emption. No fairness or latency guarantees.
+- Not aware of system topology.
