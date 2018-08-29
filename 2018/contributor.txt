@@ -1,0 +1,107 @@
+Becoming a Contributor
+
+
+Contribute by Using Go
+
+  Could be using it more
+  Write a new service
+  Use it in ways it's not typically used... report back
+
+  Notice confusion:
+
+  - Notice when things do not match expectation
+
+  Example: confusing error/bug in mail package
+
+  Would it be embarassing or pointless to fix this edge case?
+
+  - 1.1 million Go developers
+  - 1% use mail package
+  - 1% hit the edge case
+  - that's still 110 people
+
+
+File Bug Reports
+
+  What were you trying to do?
+  What did you expect to see?
+  What did you see?
+  How can I reproduce it?
+
+  The last one is critical!
+
+
+Contribute Reduced Test Cases
+
+  Reproduces the error 100% of the time
+  Small, fast program
+  Common-ish OS
+
+
+Reduced Test Cases can Suggest Contributions
+
+  In the process, you can begin to figure out where the problem really is.
+
+
+Contribute Examples
+
+  People don't read on the internet
+
+  Examples have high information density.
+
+  The "fmt" package has one example.
+
+
+Contribute Documentation
+
+  Example "scrypt" package.
+
+  One function. Documentation for it gives parameters for 2009.
+
+  File issue: for visibility. So people can find it via Google.
+
+
+Contribute to golang.org/x repos
+
+  Experimental.
+
+  Contribution process is a little less rigorous.
+
+  Examples:
+
+    gopherbot is in x/build
+    trybots GUI is awful
+
+
+How do you get started?
+
+  Lower your expectations
+
+  Should be small, so you can get comfortable with all the other aspects.
+
+  No change is too small.
+
+  Over half of Brad Fitz's commits are under 20 lines
+
+  Small commits open the door to larger involvement.
+
+
+Practice Commiting
+
+  bit.ly/goscratch
+
+
+Help
+
+  golang-dev mailing list
+  #gocontributing / #goreview on Slack
+  Post the CL and explain where you got stuck
+  It's OK to make mistakes
+
+  If people get stuck, that's on the Go team too
+
+
+Should you Contribute?
+
+  OSS is (largely) free labor
+  It might be worth it!
