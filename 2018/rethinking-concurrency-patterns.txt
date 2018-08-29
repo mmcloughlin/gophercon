@@ -1,0 +1,124 @@
+Rethinking Classic Concurrency Patterns
+Bryan Mills
+
+
+"Start goroutines when you have concurrent work."
+"Share by communicating."
+
+
+Asynchronous APIs
+
+  Returns to the calling function before it is ready.
+
+  Don't use callbacks.
+
+  Futures:
+
+  - For example, returning a single-element buffered channel
+  - Producer consumer queue
+
+  Why?
+
+  - goroutines far smaller than OS threads
+  - ... performance benefits are hard to evaluate, always benchmark
+  - initiate concurrent work
+
+  But asyncronous APIs are harder to use.
+
+  What's the contract?
+
+  Why does the user need to care?
+
+
+Rethink
+
+  The API is syncronous.
+
+  Use a goroutine when YOU have concurrent work to do.
+  It's an implementation detail.
+
+  "Concurrency is not asyncronousity."
+
+  In Go you can call serial code concurrently.
+
+
+Condition Variables
+
+  sync.Cond, example with a queue
+
+    Wait()
+      wait for condition, for example in q.Get() when its empty
+    Signal()
+      wake up one
+    Broadcast()
+      wake up all
+
+  Problems:
+
+    Spurious wakeups
+    Forgotten signals
+    Decoupled from the data it guards... easy to forget the condition variable
+    Starvation
+    Unresponsive cancellation
+      Cannot be used in a select{}, to combine with other events
+
+"Share by communicating"
+
+  Use cases:
+
+    Share resources (Pool of connections)
+      Implement pool with a semaphore channel for tokens (buffered channel)
+
+    New data for processing
+      "Share data by communicating the data."
+
+      Queue:
+        Communicate the state in buffer size 1 channels
+
+      "A channel with buffer size 1 is much like a selectable mutex"
+
+    Coordination: mark transitions
+
+      ...
+
+    Broadcast events
+
+      Events can be data, send to all receivers
+
+      Use channel close() as a broadcast, but can't communicate data
+
+      "Share a thing by communicating the thing"
+
+
+Worker Pool
+
+  Scheduler already multiplexes over OS threads
+
+  Benefit is to limit the amount of concurrent work in flight
+
+  But still not ideal to have these workers hanging around
+    - goroutines are small but not free
+    - have to manage their lifecycles
+
+  What if we just launch a goroutine per task...
+  ... use a semaphore to limit cocurrent executions
+
+    sem = make(chan token, limit)
+    for _, task := range tasks {
+      sem <- token{}
+      go func(task Task) {
+        perform(task)
+        <-sem
+      }(task)
+    }
+
+
+Caveat
+
+  If you need optimal performance, may be justified to use classical patterns
+
+
+Summary
+
+  Launch goroutines when you need them
+  Share by communicating
