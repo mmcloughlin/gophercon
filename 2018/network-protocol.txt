@@ -1,0 +1,123 @@
+
+https://github.com/mdlayher/ndp
+
+
+Neighbor Discovery Protocol (NDP)
+
+  Equiv to ARP
+
+  Eg. Used to ask network neighbor for its mac address
+
+
+Header
+
+  8   type
+  8   code
+  16  checksum
+  ... body
+
+
+NDP and Go
+
+  Typically OS handles it
+
+  But can be useful from Go too
+
+
+  ndp.Message interface
+
+    Marshal()
+    Unmarshal()
+
+  ndp.Option
+
+    similar for options
+
+  ndp.Conn
+
+    manages connections
+
+
+Bytes to Messages
+
+  Need the ICMPv6 headers.
+
+  Private marshall, unmarshall in interface
+
+
+  // A Message is a Neighbor Discovery Protocol message.
+  type Message interface {
+    // Type specifies the ICMPv6 type for a Message.
+    Type() ipv6.ICMPType
+
+    // Called via MarshalMessage and ParseMessage.
+    marshal() ([]byte, error)
+    unmarshal(b []byte) error
+  }
+
+  ParseMessage(b []byte) (Message, error) {
+    ...
+  }
+
+  1. Bounds checks
+
+  2. Switch on message type
+
+  3. Unmarshal via the interface unmarshal message.
+
+  One parsing function.
+
+
+Messages to Bytes
+
+  Top level:
+
+  func MarshalMessage(m Message) ([]byte, error) {
+    ...
+  }
+
+  - Validate before you allocate.
+  - Allocate once if possible.
+
+  - Simplicity is best
+  - Write comprehensive unit tests
+  - Measure bottlenecks
+  - Optimize only after proving a problem
+
+
+Options are Similar
+
+  Type, Length, Value format
+
+  Similar interface:
+
+  // An Option is a Neighbor Discovery Protocol option.
+  type Option interface {
+    // Code specifies the NDP option code for an Option.
+    Code() uint8
+
+    // "Code" as a method name isn't actually accurate because NDP options
+    // also refer to that field as "Type", but we want to avoid confusion
+    // with Message implementations which already use Type.
+
+    // Called when dealing with a Message's Options.
+    marshal() ([]byte, error)
+    unmarshal(b []byte) error
+  }
+
+
+Fuzzer
+
+  Use go-fuzz!
+
+
+ndp.Conn
+
+  Represent some kind of network connection.
+
+  Mimic existing interfaces.
+
+  Dial/Listen
+  Read/Write
+
+  Shoutout for golang.org/x/net
