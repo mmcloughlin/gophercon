@@ -1,0 +1,41 @@
+Going Serverless
+
+
+Intro
+
+  New way of thinking about compute.
+
+  Poor naming. "Serverless" becoming diluted.
+
+
+Functions
+
+  Example of xinetd, to help you write a daemon.
+
+  - Your "service" reads and writes from stdin/stdout
+  - Then xinetd handles the connections and networking
+  - xinetd handles the lifecycle
+
+  Think of "serverless" like this.
+
+  Functions:
+
+    Perform a specific task.
+
+  Events:
+
+    Response to something else that happens in the cloud.
+
+  Managed Services
+
+    Pay per use. Fully managed.
+
+  Two classic cases:
+
+    Rest API
+    Data Pipeline
+
+
+Live Demo
+
+  ...
