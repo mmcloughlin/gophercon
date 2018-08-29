@@ -1,0 +1,102 @@
+Writing Accessible Go
+Julia Ferraioli
+
+
+Introduction
+
+  Vision impaired off-and-on for the past two years.
+
+  Mostly blurry vision, with some intermittent points of focus.
+
+  Attempted solutions:
+
+  - Fancy monitor
+  - Fancy glasses
+  - Contrast settings
+
+  Had to accept she was (intermittently) disabled.
+
+
+Think about your toolset
+
+  How many tools take disability into account.
+
+  Example of using Apple voiceover for Go code. Painfully slow.
+
+  "We make accesible products, butnot the processes by which they are built."
+
+  Accessible tooling isn't enough. Voiceover will never be as fast.
+
+
+Hard-earned Lessons
+
+  What code patterns are easier to understand.
+
+  Logical organization
+
+    Keep variables close to where you make use of them (context is clearer in
+    voiceover).
+
+    Helps here and in general.
+
+  Short variable names
+
+    Fast to listen to
+    Easier to navigate
+
+  Make names meaningful.
+
+  - Reduce cognitive load.
+  - Light form of self-documenting code.
+
+  Pronouncable names.
+
+    var total Vector
+    func add(...)
+    var tVec Vector
+    func addAllVecs(...)
+
+    Careful with concatenation. Example of "github" in a screenreader.
+
+  Use newlines intentionally
+
+    Like paragraph breaks.
+
+  Be consistent
+
+    Changing styles midway through is disruptive
+
+    If you change style, update existing code
+
+    Link to documented styles
+
+
+Why do any of this
+
+  Disability can be invisible
+
+  Disability isn't binary
+
+  Accessibilty is for everyone
+
+  "The curb cut effect"
+
+  - Better for parents
+  - Better for tourists
+  - ...
+
+  When something built for one population ends up helping another.
+
+  These are generally good ideas.
+  "Curb cuts for your code."
+
+  - Improved maintenance
+  - Better onboarding
+  - More inclusive environment
+
+
+Writing Accessible Go
+
+  Organize Logically
+  Pronouncable Names
+  Be Consistent
