@@ -1,0 +1,161 @@
+
+
+Intro
+
+  Zcash - bitcoin with privacy.
+
+  Wanted to match Rust/C++ performance.
+
+
+Blake2
+
+  Very fast
+
+  Many features, which people usually don't implement.
+
+  Kind of in a grey area, since its not correctly specified.
+
+  Implement it independently, to iron out issues with the missing standard.
+
+
+Benchmarking
+
+  go bench  https://dave.cheney.net/2013/06/30/how-to-write-benchmarks-in-go
+
+  benchstat
+
+  pprof
+
+
+Initial Benchmarks
+
+  Much slower than expected performance.
+
+  Use: pprof top5
+
+    - compress
+    - g()
+    - math/bits.Rotate...
+    - allocs...
+
+  Not going to touch math/bits
+
+  What about the "bits scrambling" function g()
+
+
+Inlining
+
+  g() is a perfect candidate
+
+  Go compiler has heuristics "complexity score"
+
+  Chasing the inliner is a flavor of optimization in Go
+
+  Complexity costs:
+
+  - functions are +1
+  - slices are expensive +2 or +3 depending
+  - function calls are ok if we have budget, but +2
+
+  Hard stops:
+
+  - Nonlinear
+  - recover
+  - Certain functime functions and non-intrinsic assembly
+
+  How do we check?
+
+  -gcflags="-m=2"
+
+
+Why is g() not being inlined
+
+  It doesn't like math/bits called
+
+  Replacing those will reduce the "complexity cost"
+
+  Changed the API (nasty) to take out the first computation
+
+  Under budget does not mean faster. It's a heuristic.
+
+  But in this case, we got a 70% boost.
+
+
+Bounds Checks
+
+  pprof output now
+
+  top5:
+
+    compress
+    g
+    malloc
+    ...
+
+  Use the web list view.
+
+    Annotated source code!
+    Drilling down into assembly.
+
+  Two array lookups taking a massive amount of time.
+
+    Bounds checking!
+
+  We would like to eliminate the bounds checks.
+
+  We can use more compiler flags to see whether it's requiring bounds checks.
+
+  Normally the way to do this is to make an early bounds check:
+
+    _ = b[3] // deliberate access so later code knows
+
+
+  This case is doing a lookup table, and then access to the input.
+
+  - Propogate constants.
+  - Unroll loops.
+  - Resuse previously allocated local variables.
+
+  Fully unrolled, get 80% throughput bump.
+
+  There's another one
+
+
+Allocations & Copies
+
+  Many of them at the API boundary. Unavoidable really.
+
+  Two of them in internal code.
+
+  One of them was actually involved in zeroing the end of an array.
+
+  - replacing this with a simple for loop allows the compiler pattern matching
+
+  The other one was in Sum(b []byte), an append API
+
+  - check if you have room in b to just add to it
+
+
+Diminishing Returns
+
+  Don't allocate trivial
+  Unrolling
+  Copying small functions to allow inlining
+
+
+Is it worth it?
+
+  Very time consuming. You've got to love it.
+  Not best practices.
+  Extremely compiler dependent.
+  Not competitive with assembly.
+
+  Very difficult to write competitive crypto in Go code at all!
+
+
+Tricks
+
+  - Inlining complexity score
+  - Bounds checks: hints to compiler `_ = b[3]`
+  - Bounds checks: use array instead of slice
+  - sliceForAppend pattern to reduce allocations
