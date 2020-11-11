@@ -12,3 +12,6 @@ implementation.
 [**Evolving the Go Memory Manager's RAM and CPU Efficiency**](alloc.md) ([slides](slides/alloc.pdf))
 
 [Build and Test Caching in Go](cache.md)
+
+[Reordering 59 Million New York Times Publishing Assets Using Go and
+BadgerDB](newyorktimes.md) ([slides](slides/newyorktimes.pdf))
