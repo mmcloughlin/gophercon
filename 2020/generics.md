@@ -243,4 +243,7 @@ Generics are glorified (type-checked) macros. Think twice!
 
 ## Next Steps
 
+Use the playground: https://go2goplay.golang.org/
 
+Provide feedback. Can you write the code you expect to write with generics? Do
+you run into unforeseen problems?
