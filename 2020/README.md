@@ -2,5 +2,5 @@
 
 ## Wednesday, November 11, 2020
 
-[Typing [Generic] Go](generics.md) ([slides](slides/generics.pdf)
+[**Typing [Generic] Go**](generics.md) ([slides](slides/generics.pdf))
 
