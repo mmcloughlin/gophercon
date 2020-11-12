@@ -25,3 +25,6 @@ BadgerDB](newyorktimes.md) ([slides](slides/newyorktimes.pdf))
 ## Thursday, November 12, 2020
 
 [**Common patterns for Bounds Check Elimination**](bce.md) ([slides](slides/bce.pdf))
+
+**A Rainbow of Gophers: Building A More Diverse Community**
+([slides](slides/rainbow.pdf))
