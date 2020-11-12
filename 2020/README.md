@@ -15,3 +15,7 @@ implementation.
 
 [Reordering 59 Million New York Times Publishing Assets Using Go and
 BadgerDB](newyorktimes.md) ([slides](slides/newyorktimes.pdf))
+
+[**Implementing faster defers**](defer.md) ([slides](slides/defer.pdf))
+
+[**Debugging Code Generation in Go**](codegen.md)
