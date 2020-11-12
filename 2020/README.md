@@ -1,5 +1,7 @@
 # Gophercon 2020
 
+<p align="center"><img src="https://i.imgur.com/yQy677g.jpg" width="50%" /></p>
+
 ## Wednesday, November 11, 2020
 
 [**Typing [Generic] Go**](generics.md) ([slides](slides/generics.pdf))
