@@ -21,3 +21,7 @@ BadgerDB](newyorktimes.md) ([slides](slides/newyorktimes.pdf))
 [**Implementing faster defers**](defer.md) ([slides](slides/defer.pdf))
 
 [**Debugging Code Generation in Go**](codegen.md)
+
+## Thursday, November 12, 2020
+
+[**Common patterns for Bounds Check Elimination**](bce.md) ([slides](slides/bce.pdf))
