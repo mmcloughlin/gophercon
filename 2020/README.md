@@ -32,3 +32,8 @@ BadgerDB](newyorktimes.md) ([slides](slides/newyorktimes.pdf))
 [Go Team - Ask Me Anything (AMA)](https://www.youtube.com/watch?v=rdfnYtQERFs)
 
 [**Deterministically Debugging Go Programs**](debug.md)
+
+[**Pardon the Interruption: Loop Preemption in Go 1.14**](preemption.md)
+([slides](slides/preemption.pdf))
+
+[How to Write a Self-Hosted Go Compiler from Scratch](compiler.md) ([slides](slides/compiler.pdf))
