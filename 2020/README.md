@@ -28,3 +28,7 @@ BadgerDB](newyorktimes.md) ([slides](slides/newyorktimes.pdf))
 
 **A Rainbow of Gophers: Building A More Diverse Community**
 ([slides](slides/rainbow.pdf))
+
+[Go Team - Ask Me Anything (AMA)](https://www.youtube.com/watch?v=rdfnYtQERFs)
+
+[**Deterministically Debugging Go Programs**](debug.md)
