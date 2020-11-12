@@ -1,6 +1,6 @@
 # Gophercon 2020
 
-<p align="center"><img src="https://i.imgur.com/yQy677g.jpg" width="50%" /></p>
+<p align="center"><img src="https://i.imgur.com/yQy677gl.jpg" /></p>
 
 ## Wednesday, November 11, 2020
 
