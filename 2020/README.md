@@ -43,3 +43,7 @@ BadgerDB](newyorktimes.md) ([slides](slides/newyorktimes.pdf))
 A Journey to Postgres Productivity with Go ([slides](slides/postgres.pdf))
 
 [Working with Errors](errors.md) ([slides](slides/errors.pdf))
+
+Anyone Can Be A Gopher!
+
+**Optimizing Performance using a VM and Go Plugins** ([slides](slides/perfopt.pdf))
