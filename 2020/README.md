@@ -37,3 +37,9 @@ BadgerDB](newyorktimes.md) ([slides](slides/newyorktimes.pdf))
 ([slides](slides/preemption.pdf))
 
 [How to Write a Self-Hosted Go Compiler from Scratch](compiler.md) ([slides](slides/compiler.pdf))
+
+## Friday, November 13, 2020
+
+A Journey to Postgres Productivity with Go ([slides](slides/postgres.pdf))
+
+[Working with Errors](errors.md) ([slides](slides/errors.pdf))
