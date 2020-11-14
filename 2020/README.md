@@ -47,3 +47,5 @@ A Journey to Postgres Productivity with Go ([slides](slides/postgres.pdf))
 Anyone Can Be A Gopher!
 
 **Optimizing Performance using a VM and Go Plugins** ([slides](slides/perfopt.pdf))
+
+Crossing the Chasm: Go for the Next Million Users ([slides](slides/chasm.pdf))
