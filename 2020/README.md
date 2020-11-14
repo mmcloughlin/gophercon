@@ -40,6 +40,8 @@ BadgerDB](newyorktimes.md) ([slides](slides/newyorktimes.pdf))
 
 ## Friday, November 13, 2020
 
+**Go is Boring... And That's Fantastic!** ([slides](slides/boring.pdf))
+
 A Journey to Postgres Productivity with Go ([slides](slides/postgres.pdf))
 
 [Working with Errors](errors.md) ([slides](slides/errors.pdf))
