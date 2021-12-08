@@ -1,6 +1,6 @@
 # Gophercon 2021
 
-<p align="center"><img src="https://i.imgur.com/XxC6V5X.jpg" /></p>
+<p align="center"><img src="https://i.imgur.com/ssRQsjR.jpg" /></p>
 
 ## Wednesday, December 8, 2021
 
