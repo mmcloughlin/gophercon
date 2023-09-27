@@ -1,4 +1,4 @@
-# 
+# Go Changes
 
 Decision and Consensus: "... **if they have the same goals** then they're
 likeky to reach the same conclusion"
