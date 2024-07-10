@@ -18,3 +18,5 @@
 * [**Building a High-Performance Concurrent Map in Go**](concurrent-map.md)
 * [**The Go Cryptography State of the Union**](crypto.md)
 * [Advanced Code Instrumentation Techniques for High-Performance Trading Systems](instrumentation.md)
+* ...
+* [**Range Over Function Types**](range-over-function-types.md)
